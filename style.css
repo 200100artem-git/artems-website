@@ -1,0 +1,179 @@
+/* --- Modern CSS Theme (No JS Required) --- */
+:root {
+    --primary: #6366f1;
+    --secondary: #a855f7;
+    --bg: #0f172a;
+    --card-bg: rgba(30, 41, 59, 0.7);
+    --text: #f1f5f9;
+    --text-muted: #94a3b8;
+    --glass-border: rgba(255, 255, 255, 0.1);
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background-color: var(--bg);
+    background-image: 
+        radial-gradient(at 0% 0%, rgba(99, 102, 241, 0.15) 0px, transparent 50%),
+        radial-gradient(at 100% 100%, rgba(168, 85, 247, 0.15) 0px, transparent 50%);
+    color: var(--text);
+    line-height: 1.6;
+    padding: 2rem 1rem;
+    min-height: 100vh;
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+header {
+    text-align: center;
+    margin-bottom: 4rem;
+}
+
+h1 {
+    font-size: 3.5rem;
+    background: linear-gradient(to right, var(--primary), var(--secondary));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 0.5rem;
+    letter-spacing: -1px;
+}
+
+h2 {
+    color: var(--text-muted);
+    font-weight: 400;
+    margin-bottom: 2rem;
+}
+
+.nav-bar {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: 3rem;
+}
+
+/* Styling buttons to look like modern app buttons */
+button {
+    padding: 0.8rem 1.5rem;
+    border: 1px solid var(--glass-border);
+    border-radius: 12px;
+    background: var(--card-bg);
+    color: white;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    cursor: pointer;
+    backdrop-filter: blur(10px);
+}
+
+button:hover {
+    background: var(--primary);
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px -5px rgba(99, 102, 241, 0.4);
+}
+
+/* Sections as Floating Cards */
+div[id] {
+    background: var(--card-bg);
+    backdrop-filter: blur(16px);
+    border: 1px solid var(--glass-border);
+    border-radius: 24px;
+    padding: 2.5rem;
+    margin-bottom: 2.5rem;
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.2);
+}
+
+h3 {
+    font-size: 1.8rem;
+    margin-bottom: 1.5rem;
+    color: var(--text);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+h3::before {
+    content: '';
+    width: 6px;
+    height: 30px;
+    background: var(--primary);
+    border-radius: 10px;
+}
+
+/* List Styling */
+ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+li {
+    padding: 0.5rem 1rem;
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 8px;
+    transition: background 0.2s;
+}
+
+li:hover {
+    background: rgba(255, 255, 255, 0.08);
+}
+
+a {
+    color: var(--primary);
+    text-decoration: none;
+    font-weight: 500;
+    transition: opacity 0.2s;
+}
+
+a:hover {
+    opacity: 0.8;
+    text-decoration: underline;
+}
+
+/* Table of Contents Grid */
+#table ul {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 15px;
+}
+
+/* Footer Link */
+.back-link {
+    display: block;
+    text-align: center;
+    margin-top: 3rem;
+    opacity: 0.6;
+    font-size: 0.9rem;
+}
+
+.back-link:hover {
+    opacity: 1;
+}
+
+/* Typography refinements */
+p {
+    color: var(--text-muted);
+    font-size: 1.1rem;
+    margin-bottom: 1rem;
+}
+
+strong {
+    color: var(--text);
+}
+
+h4 { color: var(--secondary); margin: 1.5rem 0 0.5rem; text-transform: uppercase; font-size: 0.8rem; letter-spacing: 1px; }
+h5 { font-size: 1.2rem; margin-bottom: 0.5rem; }
+h6 { color: var(--text-muted); font-style: italic; margin-bottom: 1rem; }

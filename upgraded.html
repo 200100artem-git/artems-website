@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Artem's Digital World</title>
+    <link rel="icon" type="image/png" href="artem.png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&family=Inter:wght@400;700&display=swap');
+
+        :root {
+            --mc-green: #38e038;
+            --mc-dark-green: #248b24;
+            --bg-dark: #121212;
+            --card-bg: #1e1e1e;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: #e0e0e0;
+            font-family: 'Inter', sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        .mono { font-family: 'Fira Code', monospace; }
+
+        .mc-button {
+            background: #4a4a4a;
+            border-bottom: 4px solid #2a2a2a;
+            transition: all 0.1s;
+        }
+
+        .mc-button:active {
+            transform: translateY(2px);
+            border-bottom-width: 2px;
+        }
+
+        .mc-card {
+            background: var(--card-bg);
+            border: 1px solid #333;
+            border-radius: 12px;
+            transition: transform 0.2s, border-color 0.2s;
+        }
+
+        .mc-card:hover {
+            transform: translateY(-4px);
+            border-color: var(--mc-green);
+        }
+
+        .status-dot {
+            height: 10px;
+            width: 10px;
+            border-radius: 50%;
+            display: inline-block;
+            margin-right: 8px;
+        }
+
+        .status-online { background-color: #38e038; box-shadow: 0 0 8px #38e038; }
+        .status-warning { background-color: #f1c40f; box-shadow: 0 0 8px #f1c40f; }
+        .status-offline { background-color: #e74c3c; box-shadow: 0 0 8px #e74c3c; }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #121212; }
+        ::-webkit-scrollbar-thumb { background: #333; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--mc-green); }
+    </style>
+</head>
+<body class="min-h-screen">
+
+    <!-- Navigation -->
+    <nav class="sticky top-0 z-50 bg-[#121212]/90 backdrop-blur-md border-b border-white/10 p-4">
+        <div class="max-w-5xl mx-auto flex justify-between items-center">
+            <h1 class="text-xl font-bold text-white flex items-center gap-2">
+                <span class="text-green-500 mono">&lt;ARTEM /&gt;</span>
+            </h1>
+            <div class="space-x-4 text-sm font-medium">
+                <button onclick="showSection('home')" class="hover:text-green-500 transition">Home</button>
+                <button onclick="showSection('about')" class="hover:text-green-500 transition">About</button>
+                <button onclick="showSection('checker')" class="hover:text-green-500 transition">Checker</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header id="home-hero" class="py-20 px-4 text-center">
+        <div class="max-w-3xl mx-auto">
+            <h2 class="text-5xl font-bold mb-4 text-white">Welcome to my Digital Base</h2>
+            <p class="text-gray-400 text-lg mb-8">Exploring code, math, and blocks. <span class="mono text-green-500">artem.475419.xyz</span></p>
+            <div class="flex justify-center gap-4">
+                <button onclick="showSection('checker')" class="mc-button px-6 py-2 rounded text-white font-bold">Check Status</button>
+                <button onclick="showSection('about')" class="bg-green-600 hover:bg-green-500 px-6 py-2 rounded text-white font-bold transition">About Me</button>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-5xl mx-auto px-4 pb-20">
+        
+        <!-- Section: Home Content -->
+        <section id="home" class="space-y-12">
+            <div class="grid md:grid-cols-2 gap-8">
+                <!-- Legos -->
+                <div class="mc-card p-6">
+                    <div class="flex items-center gap-4 mb-4">
+                        <span class="text-3xl">🧱</span>
+                        <h3 class="text-2xl font-bold text-white">Lego Collection</h3>
+                    </div>
+                    <p class="text-gray-400 mb-4">
+                        I am a huge Lego enthusiast with approximately <span class="text-green-500 font-bold">1,000+ pieces</span>. 
+                        My favorite is the <span class="italic">Lego Education Spike Prime</span> kit for coding robots.
+                    </p>
+                    <div class="flex gap-3">
+                        <a href="https://lego.com" target="_blank" class="text-sm bg-white/5 hover:bg-white/10 px-3 py-1 rounded border border-white/10 transition">Official Lego</a>
+                        <a href="https://spike.legoeducation.com" target="_blank" class="text-sm bg-white/5 hover:bg-white/10 px-3 py-1 rounded border border-white/10 transition">Spike App</a>
+                    </div>
+                </div>
+
+                <!-- AI -->
+                <div class="mc-card p-6">
+                    <div class="flex items-center gap-4 mb-4">
+                        <span class="text-3xl">🤖</span>
+                        <h3 class="text-2xl font-bold text-white">AI Tools</h3>
+                    </div>
+                    <p class="text-gray-400 mb-4">
+                        I use AI to explain complex math and help debug my code. My primary assistant is <strong>Google Gemini</strong>.
+                    </p>
+                    <a href="https://gemini.google.com" target="_blank" class="text-green-500 hover:underline mono text-sm">Open Gemini -></a>
+                </div>
+            </div>
+
+            <!-- Services -->
+            <div class="mc-card p-8">
+                <h3 class="text-2xl font-bold text-white mb-6">Services I Use</h3>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                    <a href="https://canva.com" target="_blank" class="p-4 bg-blue-900/20 border border-blue-500/30 rounded-lg text-center hover:bg-blue-900/40 transition">Canva</a>
+                    <a href="https://minecraft.net" target="_blank" class="p-4 bg-green-900/20 border border-green-500/30 rounded-lg text-center hover:bg-green-900/40 transition">Minecraft</a>
+                    <a href="https://codecademy.com" target="_blank" class="p-4 bg-yellow-900/20 border border-yellow-500/30 rounded-lg text-center hover:bg-yellow-900/40 transition">Codecademy</a>
+                    <a href="https://google.com" target="_blank" class="p-4 bg-red-900/20 border border-red-500/30 rounded-lg text-center hover:bg-red-900/40 transition">Google</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section: About -->
+        <section id="about" class="hidden animate-in fade-in duration-500">
+            <div class="mc-card p-8 flex flex-col md:flex-row gap-8 items-center">
+                <div class="w-64 h-64 overflow-hidden rounded-2xl border-4 border-green-500 shadow-xl">
+                    <!-- Fallback if image1.jpg doesn't exist in local path -->
+                    <img src="image1.jpg" alt="Artem" class="w-full h-full object-cover" onerror="this.src='https://via.placeholder.com/400x400/1e1e1e/38e038?text=ARTEM'">
+                </div>
+                <div class="flex-1">
+                    <h2 class="text-3xl font-bold text-white mb-4">Hey, I'm Artem 👋</h2>
+                    <p class="text-gray-400 text-lg mb-4">
+                        I am a 10-year-old kid (as of 2026) who is passionate about coding, math, and engineering. 
+                        I spend my time building projects with Lego Spike and learning new languages on Codecademy.
+                    </p>
+                    <div class="bg-black/30 p-4 rounded-lg mono text-sm text-green-400">
+                        > current_age: 10<br>
+                        > hobbies: ["coding", "math", "lego", "minecraft"]<br>
+                        > main_ai: "Google Gemini"
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section: Checker -->
+        <section id="checker" class="hidden animate-in fade-in duration-500">
+            <div class="mb-8">
+                <h2 class="text-3xl font-bold text-white mb-2">Website Checker</h2>
+                <p class="text-gray-400">Real-time status of my sub-pages and projects.</p>
+            </div>
+
+            <div class="grid gap-4">
+                <!-- Site Row -->
+                <div class="mc-card p-4 flex items-center justify-between">
+                    <div>
+                        <span class="status-dot status-online"></span>
+                        <span class="font-bold text-white">Home Page</span>
+                    </div>
+                    <span class="text-xs uppercase bg-green-500/10 text-green-500 px-2 py-1 rounded">Operational</span>
+                </div>
+
+                <div class="mc-card p-4 flex items-center justify-between">
+                    <div>
+                        <span class="status-dot status-warning"></span>
+                        <span class="font-bold text-white">About Me</span>
+                    </div>
+                    <span class="text-xs uppercase bg-yellow-500/10 text-yellow-500 px-2 py-1 rounded">Upgrading</span>
+                </div>
+
+                <div class="mc-card p-4 flex items-center justify-between">
+                    <div>
+                        <span class="status-dot status-online"></span>
+                        <span class="font-bold text-white">Math Level 1</span>
+                    </div>
+                    <span class="text-xs uppercase bg-green-500/10 text-green-500 px-2 py-1 rounded">Operational</span>
+                </div>
+
+                <div class="mc-card p-4 flex items-center justify-between opacity-50">
+                    <div>
+                        <span class="status-dot status-offline"></span>
+                        <span class="font-bold text-white">Math Level 2</span>
+                    </div>
+                    <span class="text-xs uppercase bg-gray-500/10 text-gray-500 px-2 py-1 rounded">Coming Soon</span>
+                </div>
+
+                <div class="mc-card p-4 flex items-center justify-between">
+                    <div>
+                        <span class="status-dot status-offline"></span>
+                        <span class="font-bold text-white">Budget Tracker</span>
+                    </div>
+                    <span class="text-xs uppercase bg-red-500/10 text-red-500 px-2 py-1 rounded">Failed (No Link)</span>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="border-t border-white/10 py-8 text-center text-gray-500 text-sm">
+        <p>&copy; 2026 Artem Zhdanov. Built with Code and AI.</p>
+        <button onclick="window.scrollTo(0,0)" class="mt-4 text-green-500 hover:underline">Back to Top</button>
+    </footer>
+
+    <script>
+        // Tab Management
+        function showSection(sectionId) {
+            // Hide all sections
+            const sections = ['home', 'about', 'checker'];
+            sections.forEach(id => {
+                document.getElementById(id).classList.add('hidden');
+            });
+
+            // Handle home special case (hero visibility)
+            if(sectionId !== 'home') {
+                document.getElementById('home-hero').classList.add('hidden');
+            } else {
+                document.getElementById('home-hero').classList.remove('hidden');
+            }
+
+            // Show target section
+            document.getElementById(sectionId).classList.remove('hidden');
+            
+            // Scroll to top of section
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            
+            console.log(`Navigation: Switched to ${sectionId}`);
+        }
+
+        // Simple easter egg or console greeting
+        window.onload = () => {
+            console.log("%cArtem's Website Loaded!", "color: #38e038; font-size: 20px; font-weight: bold;");
+            console.log("Ready to code? Check out the Math Level 1 section!");
+        };
+
+        // simulate a small interaction: Check server ping
+        setInterval(() => {
+            const dots = document.querySelectorAll('.status-online');
+            dots.forEach(dot => {
+                dot.style.opacity = Math.random() > 0.1 ? 1 : 0.6;
+            });
+        }, 1000);
+    </script>
+</body>
+</html>

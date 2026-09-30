@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="icon" type="image/png" href="math.png">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minecraft Math</title>
+    <!-- Load Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Load Theme Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bangers&family=Fredoka+One&family=Orbitron&family=Press+Start+2P&display=swap" rel="stylesheet">
+    
+    <style>
+        /* --- BASE STYLES (Agnostic) --- */
+        body {
+            /* Default font, will be overridden by JS */
+            font-family: 'Press+Start 2P', cursive;
+            transition: background-color 0.3s ease;
+        }
+
+        /* Custom "pixel block" button style */
+        .btn-theme {
+            border-radius: 8px; 
+            border-width: 4px;
+            border-bottom-width: 8px;
+            border-style: solid;
+            transition: all 0.1s ease-in-out;
+            padding: 1rem; /* 16px */
+            font-size: 1.25rem; /* 20px */
+            width: 100%;
+        }
+        .btn-theme:active {
+            border-bottom-width: 4px;
+            transform: translateY(4px);
+        }
+        
+        /* Base input style */
+        .input-theme {
+            font-family: inherit; /* Will get from body */
+            border-width: 4px;
+            border-style: solid;
+            border-radius: 8px;
+            padding: 1rem; /* 16px */
+            width: 100%;
+            text-align: center;
+        }
+        .input-theme:focus {
+            outline: none;
+            box-shadow: 0 0 0 4px var(--focus-color, #4ab0c7); /* Focus color */
+        }
+
+        /* Base card style */
+        .game-card {
+            border-width: 8px;
+            border-style: solid;
+            border-radius: 12px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+            transition: all 0.3s ease;
+            color: var(--text-color, #1f2937); /* Text color */
+        }
+        
+        /* Ensure selects inside card are themed */
+        .game-card select {
+            font-family: inherit;
+            border-width: 4px;
+            border-style: solid;
+            border-radius: 8px;
+            padding: 0.75rem; /* 12px */
+            width: 100%;
+            text-align: center;
+        }
+
+        /* --- THEME: MINECRAFT (Default) --- */
+        .theme-minecraft {
+            --text-color: #1f2937;
+            --focus-color: #4ab0c7;
+        }
+        .theme-minecraft body { background-color: #5a8a4a; }
+        .theme-minecraft .game-card { background-color: #a0a0a0; border-color: #707070; }
+        .theme-minecraft .btn-primary { background-color: #6a9a4a; border-color: #4a7a3a; color: white; }
+        .theme-minecraft .btn-primary:hover { background-color: #7ab55a; }
+        .theme-minecraft .btn-secondary { background-color: #3ab0c7; border-color: #2a8a9a; color: white; }
+        .theme-minecraft .btn-secondary:hover { background-color: #4ac0d7; }
+        .theme-minecraft .input-theme, .theme-minecraft .game-card select { 
+            background-color: #8a5a2a; border-color: #5a3a1a; color: white; --tw-placeholder-color: #d4b5a0;
+        }
+        
+        /* --- THEME: SPIDER-MAN --- */
+        .theme-spiderman {
+            --text-color: #ffffff;
+            --focus-color: #ffffff;
+        }
+        .theme-spiderman body { background-color: #a00000; }
+        .theme-spiderman .game-card { background-color: #d00000; border-color: #000000; }
+        .theme-spiderman .btn-primary { background-color: #005a9c; border-color: #003a7c; color: white; }
+        .theme-spiderman .btn-primary:hover { background-color: #007acc; }
+        .theme-spiderman .btn-secondary { background-color: #b00000; border-color: #700000; color: white; }
+        .theme-spiderman .btn-secondary:hover { background-color: #d00000; }
+        .theme-spiderman .input-theme, .theme-spiderman .game-card select {
+            background-color: #222; border-color: #000; color: white; --tw-placeholder-color: #888;
+        }
+
+        /* --- THEME: GAMES --- */
+        .theme-games {
+            --text-color: #ffffff;
+            --focus-color: #f0e000;
+        }
+        .theme-games body { background-color: #6a0dad; }
+        .theme-games .game-card { background-color: #9a4fe0; border-color: #4a0a8d; }
+        .theme-games .btn-primary { background-color: #00c000; border-color: #008000; color: white; }
+        .theme-games .btn-primary:hover { background-color: #00e000; }
+        .theme-games .btn-secondary { background-color: #f0e000; border-color: #b0a000; color: #333; }
+        .theme-games .btn-secondary:hover { background-color: #f0f000; }
+        .theme-games .input-theme, .theme-games .game-card select {
+            background-color: #444; border-color: #222; color: white; --tw-placeholder-color: #aaa;
+        }
+
+        /* --- THEME: PLAYSTATION --- */
+        .theme-playstation {
+            --text-color: #eeeeee;
+            --focus-color: #006fcd;
+        }
+        .theme-playstation body { background-color: #003087; }
+        .theme-playstation .game-card { background-color: #111; border-color: #555; }
+        .theme-playstation .btn-primary { background-color: #006fcd; border-color: #004f9d; color: white; }
+        .theme-playstation .btn-primary:hover { background-color: #008fdd; }
+        .theme-playstation .btn-secondary { background-color: #777; border-color: #444; color: white; }
+        .theme-playstation .btn-secondary:hover { background-color: #999; }
+        .theme-playstation .input-theme, .theme-playstation .game-card select {
+            background-color: #333; border-color: #555; color: #ccf; --tw-placeholder-color: #88a;
+        }
+        
+        /* --- THEME: MAIZEN --- */
+        .theme-maizen {
+            --text-color: #1f2937;
+            --focus-color: #3b82f6;
+        }
+        .theme-maizen body { background-color: #fde047; } /* Yellow */
+        .theme-maizen .game-card { background-color: #ef4444; border-color: #b91c1c; } /* Red */
+        .theme-maizen .btn-primary { background-color: #22c55e; border-color: #15803d; color: white; } /* Green */
+        .theme-maizen .btn-primary:hover { background-color: #34d56e; }
+        .theme-maizen .btn-secondary { background-color: #3b82f6; border-color: #2563eb; color: white; } /* Blue */
+        .theme-maizen .btn-secondary:hover { background-color: #4c92f6; }
+        .theme-maizen .input-theme, .theme-maizen .game-card select {
+            background-color: #fff; border-color: #444; color: black; --tw-placeholder-color: #888;
+        }
+    </style>
+</head>
+<body class="flex items-center justify-center min-h-screen p-4">
+
+    <!-- Game Container -->
+    <div id="game-container" class="game-card w-full max-w-lg p-6 sm:p-8">
+
+        <!-- Start Screen -->
+        <div id="start-screen" class="text-center">
+            <h1 class="text-3xl sm:text-4xl mb-6">Math Adventure</h1>
+            <img src="math.png" alt="Icon" class="mx-auto mb-6 rounded-lg border-4 border-gray-700">
+            
+            <!-- Theme Selector -->
+            <div class="mb-4">
+                <p class="mb-4">Select Theme:</p>
+                <select id="theme-select">
+                    <option value="minecraft">Minecraft 🧱</option>
+                    <option value="spiderman">Spider-Man 🕷️</option>
+                    <option value="games">Games 🎮</option>
+                    <option value="playstation">PlayStation ⭕</option>
+                    <option value="maizen">Maizen 💚❤️</option>
+                </select>
+            </div>
+
+            <!-- Level Selector -->
+            <div class="mb-6">
+                <p class="mb-4">Select Level:</p>
+                <select id="level-select">
+                    <option value="easy">Easy (Add 0-10)</option>
+                    <option value="medium">Medium (Add/Sub 0-20)</option>
+                    <option value="hard">Hard (Add/Sub 0-50)</option>
+                </select>
+            </div>
+            
+            <button id="start-button" class="btn-theme btn-primary">
+                Start Game!
+            </button>
+        </div>
+
+        <!-- Game Screen (Hidden by default) -->
+        <div id="game-screen" class="hidden">
+            <!-- Stats Bar -->
+            <div class="flex justify-between items-center mb-6 text-lg sm:text-xl">
+                <div class="bg-gray-800 text-white p-3 rounded-lg">
+                    💎 <span id="score">0</span>
+                </div>
+                <div class="bg-gray-800 text-white p-3 rounded-lg">
+                    ⏱️ <span id="time">60</span>
+                </div>
+            </div>
+
+            <!-- Question Area -->
+            <div class="text-center my-8">
+                <p class="text-xl mb-4">What is...</p>
+                <h2 id="question" class="text-4xl sm:text-5xl font-bold">12 + 5</h2>
+            </div>
+
+            <!-- Answer Input -->
+            <div class="flex flex-col items-center">
+                <input type="number" id="answer-input" class="input-theme w-full max-w-xs p-4 text-3xl text-center mb-6" placeholder="?">
+                <button id="submit-button" class="btn-theme btn-secondary">
+                    Submit
+                </button>
+            </div>
+            
+            <!-- Feedback Message -->
+            <p id="feedback" class="text-center text-xl mt-6 h-8"></p>
+        </div>
+
+        <!-- End Screen (Hidden by default) -->
+        <div id="end-screen" class="hidden text-center">
+            <h1 class="text-3xl sm:text-4xl mb-6">Time's Up!</h1>
+            <img src="math.png" alt="Trophy" class="mx-auto mb-6 rounded-lg border-4 border-gray-700">
+            <p class="text-2xl mb-4">Final Score:</p>
+            <h2 id="final-score" class="text-5xl mb-8">0</h2>
+            <button id="play-again-button" class="btn-theme btn-primary">
+                Play Again!
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // --- THEME SWITCHER ---
+        const themeSelect = document.getElementById('theme-select');
+        
+        // Fonts object
+        const themeFonts = {
+            minecraft: "'Press Start 2P', cursive",
+            spiderman: "'Bangers', cursive",
+            games: "'Fredoka One', sans-serif",
+            playstation: "'Orbitron', sans-serif",
+            maizen: "'Press Start 2P', cursive" // Maizen is Minecraft-based
+        };
+
+        function applyTheme() {
+            const theme = themeSelect.value;
+            
+            // 1. Set body class for CSS
+            // We strip 'flex ...' and re-add it to ensure it's clean
+            document.body.className = `theme-${theme} flex items-center justify-center min-h-screen p-4`;
+            
+            // 2. Set font style
+            const font = themeFonts[theme];
+            document.body.style.fontFamily = font;
+            
+            // Must override font on inputs/buttons/selects
+            document.querySelectorAll('.input-theme, .btn-theme, .game-card select').forEach(el => {
+                el.style.fontFamily = font;
+            });
+
+            // 3. Set card text color
+            document.getElementById('game-container').style.color = `var(--text-color)`;
+        }
+
+        // Apply theme on change
+        themeSelect.addEventListener('change', applyTheme);
+        
+        // Apply default theme on page load
+        document.addEventListener('DOMContentLoaded', applyTheme);
+
+
+        // --- GAME LOGIC ---
+        
+        // DOM Elements
+        const startScreen = document.getElementById('start-screen');
+        const gameScreen = document.getElementById('game-screen');
+        const endScreen = document.getElementById('end-screen');
+        
+        const levelSelect = document.getElementById('level-select');
+        const startButton = document.getElementById('start-button');
+        const playAgainButton = document.getElementById('play-again-button');
+        
+        const scoreDisplay = document.getElementById('score');
+        const timeDisplay = document.getElementById('time');
+        const questionDisplay = document.getElementById('question');
+        const answerInput = document.getElementById('answer-input');
+        const submitButton = document.getElementById('submit-button');
+        const feedbackDisplay = document.getElementById('feedback');
+        
+        const finalScoreDisplay = document.getElementById('final-score');
+
+        // Game State
+        let score = 0;
+        let timeLeft = 60;
+        let timerInterval = null;
+        let currentCorrectAnswer = 0;
+        let currentLevel = 'easy';
+
+        // --- Game Functions ---
+
+        function startGame() {
+            // Reset state
+            score = 0;
+            timeLeft = 60;
+            currentLevel = levelSelect.value;
+            
+            // Update UI
+            scoreDisplay.textContent = score;
+            timeDisplay.textContent = timeLeft;
+            startScreen.classList.add('hidden');
+            endScreen.classList.add('hidden');
+            gameScreen.classList.remove('hidden');
+            feedbackDisplay.textContent = '';
+            answerInput.value = '';
+
+            // Start timer
+            timerInterval = setInterval(updateTimer, 1000);
+            
+            // Generate first question
+            nextQuestion();
+            answerInput.focus();
+        }
+
+        function updateTimer() {
+            timeLeft--;
+            timeDisplay.textContent = timeLeft;
+            
+            if (timeLeft <= 0) {
+                endGame();
+            }
+        }
+
+        function endGame() {
+            clearInterval(timerInterval); // Stop the timer
+            
+            // Show end screen
+            gameScreen.classList.add('hidden');
+            endScreen.classList.remove('hidden');
+            finalScoreDisplay.textContent = score;
+        }
+
+        function nextQuestion() {
+            let num1, num2, operator, questionText;
+            
+            let maxNum = 10;
+            if (currentLevel === 'medium') maxNum = 20;
+            if (currentLevel === 'hard') maxNum = 50;
+
+            num1 = Math.floor(Math.random() * (maxNum + 1));
+            num2 = Math.floor(Math.random() * (maxNum + 1));
+            
+            if (currentLevel === 'easy') {
+                operator = '+';
+            } else {
+                operator = Math.random() > 0.5 ? '+' : '-';
+            }
+
+            if (operator === '-') {
+                if (num1 < num2) {
+                    [num1, num2] = [num2, num1]; // Swap them
+                }
+                currentCorrectAnswer = num1 - num2;
+                questionText = `${num1} - ${num2}`;
+            } else {
+                currentCorrectAnswer = num1 + num2;
+                questionText = `${num1} + ${num2}`;
+            }
+
+            questionDisplay.textContent = questionText;
+        }
+
+        function checkAnswer() {
+            const userAnswer = parseInt(answerInput.value);
+
+            if (isNaN(userAnswer)) {
+                showFeedback("Type an answer!", "red");
+                return;
+            }
+
+            if (userAnswer === currentCorrectAnswer) {
+                score++;
+                scoreDisplay.textContent = score;
+                showFeedback("Correct! 💎", "green");
+            } else {
+                showFeedback("Oops! 🧨", "red");
+            }
+            
+            answerInput.value = '';
+            nextQuestion();
+            answerInput.focus();
+        }
+
+        function showFeedback(message, type) {
+            feedbackDisplay.textContent = message;
+            
+            if (type === 'green') {
+                feedbackDisplay.className = 'text-center text-xl mt-6 h-8 text-green-400';
+            } else {
+                // Use a light red that works on dark backgrounds
+                feedbackDisplay.className = 'text-center text-xl mt-6 h-8 text-red-400';
+            }
+            
+            // Clear feedback after a short delay
+            setTimeout(() => {
+                if (feedbackDisplay.textContent === message) {
+                     feedbackDisplay.textContent = '';
+                }
+            }, 1500);
+        }
+
+        // --- Event Listeners ---
+        
+        startButton.addEventListener('click', startGame);
+        playAgainButton.addEventListener('click', startGame);
+        submitButton.addEventListener('click', checkAnswer);
+        
+        answerInput.addEventListener('keydown', (event) => {
+            if (event.key === 'Enter') {
+                checkAnswer();
+            }
+        });
+
+    </script>
+</body>
+</html>
